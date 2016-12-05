@@ -1,6 +1,6 @@
 package client
 
-//import "github.com/nlopes/slack"
+import "github.com/nlopes/slack"
 import "fmt"
 import "os"
 import "strings"
@@ -12,7 +12,11 @@ func ListRooms(team string) {
 		if t != team {
 			continue
 		}
-		fmt.Println(t, tokens[i])
+		api := slack.New(tokens[i])
+		list, _ := api.GetChannels(false)
+		for _, r := range list {
+			fmt.Println(r.ID, r.Name)
+		}
 	}
 }
 
