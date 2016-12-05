@@ -11,9 +11,10 @@ func ListTeams() {
 	for {
 		key := fmt.Sprintf("SLACK_TOKEN_%d", i)
 		api := slack.New(os.Getenv(key))
-		r := api.GetTeamInfo()
-		fmt.Println("test ", r)
-
+		r, err := api.GetTeamInfo()
+		if err == nil {
+			fmt.Println(r.ID, r.Domain, r.Name)
+		}
 		i++
 		if i >= slack_teams {
 			break
