@@ -4,6 +4,26 @@ import "github.com/nlopes/slack"
 import "fmt"
 import "os"
 import "strings"
+import "time"
+
+func SaveHistory(team, room string) {
+	ts := time.Now().Unix() - int64(31536000*5)
+	tss := fmt.Sprintf("%d", ts)
+
+	teams := strings.Split(os.Getenv("SLACK_TEAMS"), ",")
+	tokens := strings.Split(os.Getenv("SLACK_TOKENS"), ",")
+	for i, t := range teams {
+		if t != team {
+			continue
+		}
+		api := slack.New(tokens[i])
+		hp := slack.HistoryParameters{Oldest: tss, Latest: "", Count: 10, Inclusive: false, Unreads: false}
+		list, _ := api.GetGroupHistory(room, hp)
+		for _, r := range list.Messages {
+			fmt.Println(r.Msg.Text)
+		}
+	}
+}
 
 func ListRooms(team string) {
 	teams := strings.Split(os.Getenv("SLACK_TEAMS"), ",")
@@ -15,6 +35,10 @@ func ListRooms(team string) {
 		api := slack.New(tokens[i])
 		list, _ := api.GetChannels(false)
 		for _, r := range list {
+			fmt.Println(r.ID, r.Name)
+		}
+		list2, _ := api.GetGroups(false)
+		for _, r := range list2 {
 			fmt.Println(r.ID, r.Name)
 		}
 	}
