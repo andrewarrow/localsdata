@@ -1,19 +1,29 @@
 package client
 
-import "github.com/nlopes/slack"
+//import "github.com/nlopes/slack"
 import "fmt"
 import "os"
-import "strconv"
+import "strings"
 
 func ListRooms(team string) {
-}
-
-func ListTeams() {
-	for _, ti := range GetTeams() {
-		fmt.Println(ti.ID, ti.Name, ti.Domain)
+	teams := strings.Split(os.Getenv("SLACK_TEAMS"), ",")
+	tokens := strings.Split(os.Getenv("SLACK_TOKENS"), ",")
+	for i, t := range teams {
+		if t != team {
+			continue
+		}
+		fmt.Println(t, tokens[i])
 	}
 }
 
+func ListTeams() {
+	teams := strings.Split(os.Getenv("SLACK_TEAMS"), ",")
+	for _, team := range teams {
+		fmt.Println(team)
+	}
+}
+
+/*
 func GetTeams() []*slack.TeamInfo {
 	list := make([]*slack.TeamInfo, 0)
 
@@ -33,4 +43,4 @@ func GetTeams() []*slack.TeamInfo {
 	}
 
 	return list
-}
+}*/
