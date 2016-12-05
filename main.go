@@ -4,8 +4,11 @@ import "github.com/andrewarrow/grepslak/client"
 import "os"
 
 func main() {
-	//command := os.Args[0]
 	if len(os.Args) == 1 {
 		client.ListTeams()
+		return
+	}
+	if len(os.Args) == 2 {
+		client.ListRooms(os.Args[1])
 	}
 }
