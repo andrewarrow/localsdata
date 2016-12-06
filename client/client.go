@@ -7,6 +7,27 @@ import "strings"
 import "time"
 
 func SaveHistory(team, room string) {
+	//ts := time.Now().Unix() - int64(31536000*5)
+	//tss := fmt.Sprintf("%d", ts)
+
+	teams := strings.Split(os.Getenv("SLACK_TEAMS"), ",")
+	tokens := strings.Split(os.Getenv("SLACK_TOKENS"), ",")
+	for i, t := range teams {
+		if t != team {
+			continue
+		}
+		api := slack.New(tokens[i])
+
+		gfp := slack.GetFilesParameters{Channel: room, Count: 100}
+		list, p, err := api.GetFiles(gfp)
+		for _, r := range list {
+			fmt.Println(r.URLPrivate)
+		}
+		fmt.Println(p, err)
+	}
+}
+
+func SaveHistory2(team, room string) {
 	ts := time.Now().Unix() - int64(31536000*5)
 	tss := fmt.Sprintf("%d", ts)
 
@@ -61,25 +82,3 @@ func ListTeams() {
 		fmt.Println(team)
 	}
 }
-
-/*
-func GetTeams() []*slack.TeamInfo {
-	list := make([]*slack.TeamInfo, 0)
-
-	slack_teams, _ := strconv.ParseInt(os.Getenv("SLACK_TEAMS"), 10, 64)
-	i := int64(0)
-	for {
-		key := fmt.Sprintf("SLACK_TOKEN_%d", i)
-		api := slack.New(os.Getenv(key))
-		r, err := api.GetTeamInfo()
-		if err == nil {
-			list = append(list, r)
-		}
-		i++
-		if i >= slack_teams {
-			break
-		}
-	}
-
-	return list
-}*/
