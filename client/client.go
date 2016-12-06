@@ -74,6 +74,10 @@ func ListRooms(team string) {
 		for _, r := range list2 {
 			fmt.Println(r.ID, r.Name)
 		}
+		list3, _ := api.GetIMChannels()
+		for _, r := range list3 {
+			fmt.Println(r.ID, r.User)
+		}
 	}
 }
 
