@@ -2,6 +2,7 @@ package client
 
 import "runtime"
 import "os"
+import "path/filepath"
 import "github.com/nlopes/slack"
 
 func UserHomeDir() string {
@@ -16,12 +17,19 @@ func UserHomeDir() string {
 }
 
 func SaveMsg(team, room string, msg slack.Msg) {
-	lpath := UserHomeDir() + "/.grepslak/" + team + "/" + room + "/msg/" + msg.Timestamp
+	dir := filepath.Join(UserHomeDir(), ".grepslak", team, room)
+	os.MkdirAll(dir, 0655)
+
+	os.Mkdir(filepath.Join(dir, "msg"), 0655)
+	os.Mkdir(filepath.Join(dir, "attachments"), 0655)
+	os.Mkdir(filepath.Join(dir, "files"), 0655)
+
+	lpath := filepath.Join(dir, "msg", msg.Timestamp)
 	file, _ := os.OpenFile(lpath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0655)
 	file.WriteString(msg.Text)
 	file.Close()
 	for _, a := range msg.Attachments {
-		lpath = UserHomeDir() + "/.grepslak/" + team + "/" + room + "/attachments/" + msg.Timestamp
+		lpath := filepath.Join(dir, "attachments", msg.Timestamp)
 		file, _ = os.OpenFile(lpath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0655)
 		file.WriteString(a.Title + "|" + a.TitleLink + "\n" + a.Text)
 		file.Close()
