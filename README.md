@@ -1,4 +1,4 @@
-=localsdata
+#localsdata aka lsd
 
 Sometimes I know I have a curl command in a certain slack room in a certain slack team.
 
@@ -56,6 +56,6 @@ to download every message, every attachment, every file, and every little peice 
   4e. Avoid having to learn the main slack UI program's search syntax when grep piped to greps is way faster/better.
   ```
 
-= INSTALL
+##INSTALL
 
 1. email author for instructions
