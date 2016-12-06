@@ -17,10 +17,20 @@ func SaveHistory(team, room string) {
 			continue
 		}
 		api := slack.New(tokens[i])
-		hp := slack.HistoryParameters{Oldest: tss, Latest: "", Count: 10, Inclusive: false, Unreads: false}
-		list, _ := api.GetGroupHistory(room, hp)
-		for _, r := range list.Messages {
-			fmt.Println(r.Msg.Text)
+
+		for {
+			hp := slack.HistoryParameters{Oldest: tss, Latest: "", Count: 10, Inclusive: false, Unreads: false}
+			list, _ := api.GetGroupHistory(room, hp)
+			stamps := make([]string, 0)
+			for _, r := range list.Messages {
+				fmt.Println(r.Msg.Timestamp)
+				fmt.Println(r.Msg.Text)
+				fmt.Println(r.Msg.Attachments)
+				stamps = append(stamps, r.Msg.Timestamp)
+			}
+			tss = stamps[0]
+			fmt.Println("-----")
+			time.Sleep(time.Second)
 		}
 	}
 }
