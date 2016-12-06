@@ -1,4 +1,4 @@
-#localsdata aka lsd
+#localsdata
 
 Sometimes I know I have a curl command in a certain slack room in a certain slack team.
 
