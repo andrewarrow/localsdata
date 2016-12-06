@@ -41,7 +41,6 @@ Enter lsd:
 
   ```
    $ ./lsd anotherteam G2AS5UZN3
-
   ```
 
 to download every message, every attachment, every file, and every little peice of information about that room in that slack team from the begining of time to now and save it locally somewhere on your hard drive.
@@ -49,7 +48,7 @@ to download every message, every attachment, every file, and every little peice 
 4. Now you have all the data locally and you can:
 
   ```
-  4a. Do that `grep -R curl .` command now and search just that one room's data.
+  4a. Do that `grep -R curl .` command and search just that one room's data.
   4b. Open the files in Finder and visually scan each jpg to find just the one you know is there someplace.
   4c. Come up with other creative greps to narrow your search and find the info you need.
   4d. Avoid having the main slack UI program be in a weird state of scrolled to a message far away in time.
