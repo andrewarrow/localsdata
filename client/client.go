@@ -21,7 +21,8 @@ func SaveHistory(team, room string) {
 		gfp := slack.GetFilesParameters{Channel: room, Count: 100}
 		list, p, err := api.GetFiles(gfp)
 		for _, r := range list {
-			fmt.Println(r.URLPrivate)
+			SaveFile(team, room, r.URLPrivate, tokens[i], int64(r.Timestamp))
+			fmt.Println(int64(r.Timestamp), r.URLPrivate)
 		}
 		fmt.Println(p, err)
 	}

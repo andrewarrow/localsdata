@@ -3,8 +3,11 @@ package client
 import "runtime"
 import "fmt"
 import "os"
+import "net/http"
 import "path/filepath"
 import "github.com/nlopes/slack"
+import "strings"
+import "io/ioutil"
 
 func UserHomeDir() string {
 	if runtime.GOOS == "windows" {
@@ -17,8 +20,24 @@ func UserHomeDir() string {
 	return os.Getenv("HOME")
 }
 
-func SaveMsg(team, room string, msg slack.Msg) {
-	// /Users/aa/.grepslak/0x7a69/G0ETQAEBF
+func SaveFile(team, room, url, token string, ts int64) {
+	dir := SetupDirs(team, room)
+	client := &http.Client{}
+	req, _ := http.NewRequest("GET", url, nil)
+	req.Header.Set("Authorization", "Bearer "+token)
+	res, _ := client.Do(req)
+	data, _ := ioutil.ReadAll(res.Body)
+
+	parts := strings.Split(url, ".")
+
+	lpath := filepath.Join(dir, "files", fmt.Sprintf("%d.%s", ts, parts[len(parts)-1]))
+	fmt.Println(lpath)
+	file, _ := os.OpenFile(lpath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0655)
+	file.Write(data)
+	file.Close()
+}
+
+func SetupDirs(team, room string) string {
 	base := filepath.Join(UserHomeDir(), ".grepslak")
 	os.Mkdir(base, 0777)
 	dir := filepath.Join(base, team, room)
@@ -28,6 +47,12 @@ func SaveMsg(team, room string, msg slack.Msg) {
 	os.MkdirAll(filepath.Join(dir, "msg"), 0777)
 	os.MkdirAll(filepath.Join(dir, "attachments"), 0777)
 	os.MkdirAll(filepath.Join(dir, "files"), 0777)
+
+	return dir
+}
+
+func SaveMsg(team, room string, msg slack.Msg) {
+	dir := SetupDirs(team, room)
 
 	lpath := filepath.Join(dir, "msg", msg.Timestamp)
 	fmt.Println(lpath)
