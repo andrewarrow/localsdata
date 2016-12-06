@@ -76,7 +76,8 @@ func ListRooms(team string) {
 		}
 		list3, _ := api.GetIMChannels()
 		for _, r := range list3 {
-			fmt.Println(r.ID, r.User)
+			u, _ := api.GetUserInfo(r.User)
+			fmt.Println(r.ID, u.Name)
 		}
 	}
 }
