@@ -37,7 +37,7 @@ Enter lsd:
   D29QLPRE9 timinaccounting
   ```
 
-3. you type ./lsd <team> <room>
+3. you type ./lsd team room
 
   ```
    $ ./lsd anotherteam G2AS5UZN3
