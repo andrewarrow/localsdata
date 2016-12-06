@@ -23,6 +23,7 @@ Enter lsd:
 
 2. you type ./lsd with a team name to get a list of rooms:
 
+  ```
   $ ./lsd anotherteam
 
   C093KBABZ test
@@ -34,10 +35,14 @@ Enter lsd:
   D19P5FBD7 markfreely
   D19NWL7TZ clarkbenson
   D29QLPRE9 timinaccounting
+  ```
 
 3. you type ./lsd <team> <room>
 
+  ```
    $ ./lsd anotherteam G2AS5UZN3
+
+  ```
 
 to download every message, every attachment, every file, and every little peice of information about that room in that slack team from the begining of time to now and save it locally somewhere on your hard drive.
 
