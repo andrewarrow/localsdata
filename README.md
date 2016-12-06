@@ -12,12 +12,14 @@ Enter lsd:
 
 1. you type ./lsd with no command line parameter to get a list of your slack teams:
 
+  ```
   $ ./lsd
   team1
   team2
   anotherteam
   yetanotherteam
   wowstillmoreteams
+  ```
 
 2. you type ./lsd with a team name to get a list of rooms:
 
