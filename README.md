@@ -48,11 +48,13 @@ to download every message, every attachment, every file, and every little peice 
 
 4. Now you have all the data locally and you can:
 
+  ```
   4a. Do that `grep -R curl .` command now and search just that one room's data.
   4b. Open the files in Finder and visually scan each jpg to find just the one you know is there someplace.
   4c. Come up with other creative greps to narrow your search and find the info you need.
   4d. Avoid having the main slack UI program be in a weird state of scrolled to a message far away in time.
   4e. Avoid having to learn the main slack UI program's search syntax when grep piped to greps is way faster/better.
+  ```
 
 = INSTALL
 
