@@ -1,6 +1,6 @@
 package main
 
-import "github.com/andrewarrow/grepslak/client"
+import "github.com/andrewarrow/localsdata/client"
 import "os"
 
 func main() {
