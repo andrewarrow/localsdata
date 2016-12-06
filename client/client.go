@@ -22,7 +22,7 @@ func SaveHistory(team, room string) {
 		list, p, err := api.GetFiles(gfp)
 		for _, r := range list {
 			SaveFile(team, room, r.URLPrivate, tokens[i], int64(r.Timestamp))
-			fmt.Println(int64(r.Timestamp), r.URLPrivate)
+			fmt.Println(int64(r.Timestamp), r.URLPrivateDownload)
 		}
 		fmt.Println(p, err)
 	}
