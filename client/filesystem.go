@@ -39,14 +39,14 @@ func SaveFile(team, room, url, token string, ts int64) {
 
 func SetupDirs(team, room string) string {
 	base := filepath.Join(UserHomeDir(), ".grepslak")
-	os.Mkdir(base, 0600)
+	os.Mkdir(base, 0700)
 	dir := filepath.Join(base, team, room)
 	fmt.Println(dir)
-	os.MkdirAll(dir, 0600)
+	os.MkdirAll(dir, 0700)
 
-	os.MkdirAll(filepath.Join(dir, "msg"), 0600)
-	os.MkdirAll(filepath.Join(dir, "attachments"), 0600)
-	os.MkdirAll(filepath.Join(dir, "files"), 0600)
+	os.MkdirAll(filepath.Join(dir, "msg"), 0700)
+	os.MkdirAll(filepath.Join(dir, "attachments"), 0700)
+	os.MkdirAll(filepath.Join(dir, "files"), 0700)
 
 	return dir
 }
