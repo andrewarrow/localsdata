@@ -48,20 +48,26 @@ func SaveHistory(team, room string) {
 		}
 		api := slack.New(tokens[i])
 
+		j := 0
 		for {
+			fmt.Println("syncing ", j)
+			j += 100
 			hp := slack.HistoryParameters{Oldest: tss, Latest: "", Count: 100, Inclusive: false, Unreads: false}
 			list, _ := api.GetGroupHistory(room, hp)
 			stamps := make([]string, 0)
 			for _, r := range list.Messages {
 				SaveMsg(team, room, r.Msg)
-				fmt.Println(r.Msg.Timestamp)
+				//fmt.Println(r.Msg.Timestamp)
 				//fmt.Println(r.Msg.Text)
-				fmt.Println(r.Msg.Attachments)
+				//fmt.Println(r.Msg.Attachments)
 				stamps = append(stamps, r.Msg.Timestamp)
 			}
+			if len(stamps) == 0 {
+				break
+			}
 			tss = stamps[0]
-			fmt.Println("-----")
-			time.Sleep(time.Second)
+			//fmt.Println("-----")
+			//time.Sleep(time.Second)
 		}
 	}
 }

@@ -31,7 +31,7 @@ func SaveFile(team, room, url, token string, ts int64) {
 	parts := strings.Split(url, ".")
 
 	lpath := filepath.Join(dir, "files", fmt.Sprintf("%d.%s", ts, parts[len(parts)-1]))
-	fmt.Println(lpath)
+	//fmt.Println(lpath)
 	file, _ := os.OpenFile(lpath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
 	file.Write(data)
 	file.Close()
@@ -47,7 +47,7 @@ func SetupDirs(team, room string) string {
 	base := filepath.Join(UserHomeDir(), ".grepslak")
 	os.Mkdir(base, 0700)
 	dir := filepath.Join(base, team, room)
-	fmt.Println(dir)
+	//fmt.Println(dir)
 	os.MkdirAll(dir, 0700)
 
 	os.MkdirAll(filepath.Join(dir, "msg"), 0700)
@@ -61,7 +61,7 @@ func SaveMsg(team, room string, msg slack.Msg) {
 	dir := SetupDirs(team, room)
 
 	lpath := filepath.Join(dir, "msg", msg.Timestamp)
-	fmt.Println(lpath)
+	//fmt.Println(lpath)
 	file, _ := os.OpenFile(lpath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
 	file.WriteString(msg.Text)
 	file.Close()
