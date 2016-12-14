@@ -9,6 +9,10 @@ func main() {
 		return
 	}
 	if len(os.Args) == 2 {
+		if os.Args[1] == "clean" {
+			client.Clean()
+			return
+		}
 		client.ListRooms(os.Args[1])
 		return
 	}

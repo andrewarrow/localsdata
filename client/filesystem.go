@@ -37,6 +37,12 @@ func SaveFile(team, room, url, token string, ts int64) {
 	file.Close()
 }
 
+func CleanDir(team string) {
+	base := filepath.Join(UserHomeDir(), ".grepslak")
+	fmt.Println("removing ", team)
+	os.RemoveAll(filepath.Join(base, team))
+}
+
 func SetupDirs(team, room string) string {
 	base := filepath.Join(UserHomeDir(), ".grepslak")
 	os.Mkdir(base, 0700)

@@ -6,7 +6,7 @@ import "os"
 import "strings"
 import "time"
 
-func SaveHistory(team, room string) {
+func SaveHistory2(team, room string) {
 	//ts := time.Now().Unix() - int64(31536000*5)
 	//tss := fmt.Sprintf("%d", ts)
 
@@ -21,14 +21,22 @@ func SaveHistory(team, room string) {
 		gfp := slack.GetFilesParameters{Channel: room, Count: 100}
 		list, p, err := api.GetFiles(gfp)
 		for _, r := range list {
-			SaveFile(team, room, r.URLPrivate, tokens[i], int64(r.Timestamp))
-			fmt.Println(int64(r.Timestamp), r.URLPrivateDownload)
+			//SaveFile(team, room, r.URLPrivate, tokens[i], int64(r.Timestamp))
+
+			fmt.Println(r.Name, int64(r.Timestamp), r.URLPrivateDownload)
 		}
 		fmt.Println(p, err)
 	}
 }
 
-func SaveHistory2(team, room string) {
+func Clean() {
+	teams := strings.Split(os.Getenv("SLACK_TEAMS"), ",")
+	for _, t := range teams {
+		CleanDir(t)
+	}
+}
+
+func SaveHistory(team, room string) {
 	ts := time.Now().Unix() - int64(31536000*5)
 	tss := fmt.Sprintf("%d", ts)
 
