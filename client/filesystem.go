@@ -60,8 +60,9 @@ func SetupDirs(team, room string) string {
 
 func LookForLinks(text string) {
 	items := xurls.Strict.FindAllString(text, -1)
-
-	fmt.Println(items)
+	for _, url := range items {
+		links[url] = true
+	}
 }
 
 func SaveMsg(team, room string, msg slack.Msg) {

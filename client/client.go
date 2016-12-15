@@ -6,6 +6,8 @@ import "os"
 import "strings"
 import "time"
 
+var links = make(map[string]bool)
+
 func SaveHistory2(team, room string) {
 	//ts := time.Now().Unix() - int64(31536000*5)
 	//tss := fmt.Sprintf("%d", ts)
@@ -70,6 +72,8 @@ func SaveHistory(team, room string) {
 			//time.Sleep(time.Second)
 		}
 	}
+
+	fmt.Println(links)
 }
 
 func ListRooms(team string) {
