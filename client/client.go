@@ -6,7 +6,7 @@ import "os"
 import "strings"
 import "time"
 
-var links = make(map[string]bool)
+var links = make(map[string]int)
 
 func SaveHistory2(team, room string) {
 	//ts := time.Now().Unix() - int64(31536000*5)

@@ -61,7 +61,12 @@ func SetupDirs(team, room string) string {
 func LookForLinks(text string) {
 	items := xurls.Strict.FindAllString(text, -1)
 	for _, url := range items {
-		links[url] = true
+		val, ok := links[url]
+		if ok {
+			links[url] = val + 1
+		} else {
+			links[url] = 1
+		}
 	}
 }
 
