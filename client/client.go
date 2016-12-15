@@ -51,8 +51,8 @@ func SaveHistory(team, room string) {
 		j := 0
 		for {
 			fmt.Println("syncing ", j)
-			j += 100
-			hp := slack.HistoryParameters{Oldest: tss, Latest: "", Count: 100, Inclusive: false, Unreads: false}
+			j += 1000
+			hp := slack.HistoryParameters{Oldest: tss, Latest: "", Count: 1000, Inclusive: false, Unreads: false}
 			list, _ := api.GetGroupHistory(room, hp)
 			stamps := make([]string, 0)
 			for _, r := range list.Messages {
