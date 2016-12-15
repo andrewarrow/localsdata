@@ -8,6 +8,7 @@ import "path/filepath"
 import "github.com/nlopes/slack"
 import "strings"
 import "io/ioutil"
+import "github.com/mvdan/xurls"
 
 func UserHomeDir() string {
 	if runtime.GOOS == "windows" {
@@ -57,6 +58,12 @@ func SetupDirs(team, room string) string {
 	return dir
 }
 
+func LookForLinks(text string) {
+	items := xurls.Strict.FindAllString(text, -1)
+
+	fmt.Println(items)
+}
+
 func SaveMsg(team, room string, msg slack.Msg) {
 	dir := SetupDirs(team, room)
 
@@ -65,6 +72,7 @@ func SaveMsg(team, room string, msg slack.Msg) {
 	file, _ := os.OpenFile(lpath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
 	file.WriteString(msg.Text)
 	file.Close()
+	LookForLinks(msg.Text)
 	for _, a := range msg.Attachments {
 		lpath := filepath.Join(dir, "attachments", msg.Timestamp)
 		file, _ = os.OpenFile(lpath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
