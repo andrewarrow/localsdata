@@ -73,7 +73,11 @@ func SaveHistory(team, room string) {
 		}
 	}
 
-	fmt.Println(links)
+	for k, v := range links {
+		if v > 2 {
+			fmt.Println(k, v)
+		}
+	}
 }
 
 func ListRooms(team string) {
