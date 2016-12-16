@@ -59,10 +59,10 @@ func leftPad2Len(s string, padStr string, overallLen int) string {
 	return retStr[(len(retStr) - overallLen):]
 }
 
-func CheckForHit(j int, thing slack.CtxMessage) {
+func CheckForHit(j int, thing slack.CtxMessage, channel string) {
 	items := xurls.Strict.FindAllString(thing.Text, -1)
 	for _, item := range items {
-		fmt.Printf("%s|%s\n", leftPad2Len(thing.Username, " ", 15), item)
+		fmt.Printf("%s%s|%s\n", leftPad2Len(channel, " ", 15), leftPad2Len(thing.Username, " ", 15), item)
 	}
 }
 
@@ -84,14 +84,15 @@ func Search() {
 			fmt.Println(err)
 		}
 		for j, r := range list.Matches {
-			CheckForHit(j, r.Previous)
-			CheckForHit(j, r.Previous2)
+			cn := r.Channel.Name
+			CheckForHit(j, r.Previous, cn)
+			CheckForHit(j, r.Previous2, cn)
 			fake := slack.CtxMessage{}
 			fake.Username = r.Username
 			fake.Text = r.Text
-			CheckForHit(j, fake)
-			CheckForHit(j, r.Next)
-			CheckForHit(j, r.Next2)
+			CheckForHit(j, fake, cn)
+			CheckForHit(j, r.Next, cn)
+			CheckForHit(j, r.Next2, cn)
 		}
 	}
 }
