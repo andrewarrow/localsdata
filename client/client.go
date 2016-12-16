@@ -48,12 +48,16 @@ func Search() {
 		sp.Sort = "timestamp"
 		sp.SortDirection = "desc"
 		sp.Highlight = false
-		sp.Count = 5
+		sp.Count = 6
 		sp.Page = 1
-		list, err := api.SearchMessages("http", sp)
+		list, err := api.SearchMessages("gale", sp)
 		fmt.Println(err)
-		for _, r := range list.Matches {
-			fmt.Println(r.Text)
+		for j, r := range list.Matches {
+			fmt.Println(j, ".", r.Previous.Username, " ", r.Previous.Text)
+			fmt.Println(j, ".", r.Previous2.Username, " ", r.Previous2.Text)
+			fmt.Println(j, ".", r.Username, " ", r.Text)
+			fmt.Println(j, ".", r.Next.Username, " ", r.Next.Text)
+			fmt.Println(j, ".", r.Next2.Username, " ", r.Next2.Text)
 		}
 	}
 }
