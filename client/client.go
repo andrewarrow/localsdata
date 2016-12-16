@@ -39,27 +39,50 @@ func Clean() {
 	}
 }
 
+func leftPad(s string, padStr string, pLen int) string {
+	return strings.Repeat(padStr, pLen) + s
+}
+func rightPad(s string, padStr string, pLen int) string {
+	return s + strings.Repeat(padStr, pLen)
+}
+
+func rightPad2Len(s string, padStr string, overallLen int) string {
+	var padCountInt int
+	padCountInt = 1 + ((overallLen - len(padStr)) / len(padStr))
+	var retStr = s + strings.Repeat(padStr, padCountInt)
+	return retStr[:overallLen]
+}
+func leftPad2Len(s string, padStr string, overallLen int) string {
+	var padCountInt int
+	padCountInt = 1 + ((overallLen - len(padStr)) / len(padStr))
+	var retStr = strings.Repeat(padStr, padCountInt) + s
+	return retStr[(len(retStr) - overallLen):]
+}
+
 func CheckForHit(j int, username, text string) {
 	items := xurls.Strict.FindAllString(text, -1)
 	for _, item := range items {
-		fmt.Println(j, ".", username, " ", item)
+		fmt.Printf("%s|%s\n", leftPad2Len(username, " ", 15), item)
 	}
 }
 
 func Search() {
 	teams := strings.Split(os.Getenv("SLACK_TEAMS"), ",")
 	tokens := strings.Split(os.Getenv("SLACK_TOKENS"), ",")
-	for i, _ := range teams {
+	for i, team := range teams {
+		fmt.Println(team)
 		api := slack.New(tokens[i])
 
 		sp := slack.SearchParameters{}
 		sp.Sort = "timestamp"
 		sp.SortDirection = "desc"
 		sp.Highlight = false
-		sp.Count = 10
+		sp.Count = 20
 		sp.Page = 1
 		list, err := api.SearchMessages("http", sp)
-		fmt.Println(err)
+		if err != nil {
+			fmt.Println(err)
+		}
 		for j, r := range list.Matches {
 			CheckForHit(j, r.Previous.Username, r.Previous.Text)
 			CheckForHit(j, r.Previous2.Username, r.Previous2.Text)
