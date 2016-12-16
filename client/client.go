@@ -83,7 +83,7 @@ func Search() {
 		sp.Highlight = false
 		sp.Count = 20
 		sp.Page = 1
-		list, err := api.SearchMessages("http", sp)
+		list, err := api.SearchMessages("from:me http", sp)
 		if err != nil {
 			fmt.Println(err)
 		}
