@@ -48,11 +48,13 @@ func Search() {
 		sp.Sort = "timestamp"
 		sp.SortDirection = "desc"
 		sp.Highlight = false
-		sp.Count = 30
+		sp.Count = 5
 		sp.Page = 1
 		list, err := api.SearchMessages("http", sp)
 		fmt.Println(err)
-		fmt.Println(list)
+		for _, r := range list.Matches {
+			fmt.Println(r.Text)
+		}
 	}
 }
 
