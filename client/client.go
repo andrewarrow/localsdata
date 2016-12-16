@@ -62,7 +62,11 @@ func leftPad2Len(s string, padStr string, overallLen int) string {
 func CheckForHit(j int, thing slack.CtxMessage, channel string) {
 	items := xurls.Strict.FindAllString(thing.Text, -1)
 	for _, item := range items {
-		fmt.Printf("%s%s|%s\n", leftPad2Len(channel, " ", 15), leftPad2Len(thing.Username, " ", 15), item)
+		if channel[0] == 'U' {
+			fmt.Printf("%s|%s\n", leftPad2Len(thing.Username, " ", 15), item)
+		} else {
+			fmt.Printf("%s%s|%s\n", leftPad2Len(channel, " ", 15), leftPad2Len(thing.Username, " ", 15), item)
+		}
 	}
 }
 
