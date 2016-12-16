@@ -12,6 +12,9 @@ func main() {
 		if os.Args[1] == "clean" {
 			client.Clean()
 			return
+		} else if os.Args[1] == "search" {
+			client.Search()
+			return
 		}
 		client.ListRooms(os.Args[1])
 		return

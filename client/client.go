@@ -38,6 +38,24 @@ func Clean() {
 	}
 }
 
+func Search() {
+	teams := strings.Split(os.Getenv("SLACK_TEAMS"), ",")
+	tokens := strings.Split(os.Getenv("SLACK_TOKENS"), ",")
+	for i, _ := range teams {
+		api := slack.New(tokens[i])
+
+		sp := slack.SearchParameters{}
+		sp.Sort = "timestamp"
+		sp.SortDirection = "desc"
+		sp.Highlight = false
+		sp.Count = 30
+		sp.Page = 1
+		list, err := api.SearchMessages("http", sp)
+		fmt.Println(err)
+		fmt.Println(list)
+	}
+}
+
 func SaveHistory(team, room string) {
 	ts := time.Now().Unix() - int64(31536000*5)
 	tss := fmt.Sprintf("%d", ts)
