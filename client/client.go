@@ -5,6 +5,7 @@ import "fmt"
 import "os"
 import "strings"
 import "time"
+import "github.com/mvdan/xurls"
 
 var links = make(map[string]int)
 
@@ -38,6 +39,13 @@ func Clean() {
 	}
 }
 
+func CheckForHit(j int, username, text string) {
+	items := xurls.Strict.FindAllString(text, -1)
+	for _, item := range items {
+		fmt.Println(j, ".", username, " ", item)
+	}
+}
+
 func Search() {
 	teams := strings.Split(os.Getenv("SLACK_TEAMS"), ",")
 	tokens := strings.Split(os.Getenv("SLACK_TOKENS"), ",")
@@ -48,16 +56,16 @@ func Search() {
 		sp.Sort = "timestamp"
 		sp.SortDirection = "desc"
 		sp.Highlight = false
-		sp.Count = 6
+		sp.Count = 10
 		sp.Page = 1
-		list, err := api.SearchMessages("gale", sp)
+		list, err := api.SearchMessages("http", sp)
 		fmt.Println(err)
 		for j, r := range list.Matches {
-			fmt.Println(j, ".", r.Previous.Username, " ", r.Previous.Text)
-			fmt.Println(j, ".", r.Previous2.Username, " ", r.Previous2.Text)
-			fmt.Println(j, ".", r.Username, " ", r.Text)
-			fmt.Println(j, ".", r.Next.Username, " ", r.Next.Text)
-			fmt.Println(j, ".", r.Next2.Username, " ", r.Next2.Text)
+			CheckForHit(j, r.Previous.Username, r.Previous.Text)
+			CheckForHit(j, r.Previous2.Username, r.Previous2.Text)
+			CheckForHit(j, r.Username, r.Text)
+			CheckForHit(j, r.Next.Username, r.Next.Text)
+			CheckForHit(j, r.Next2.Username, r.Next2.Text)
 		}
 	}
 }
