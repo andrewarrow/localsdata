@@ -15,6 +15,9 @@ func main() {
 		} else if os.Args[1] == "search" {
 			client.Search()
 			return
+		} else if os.Args[1] == "stats" {
+			client.Stats("hdt")
+			return
 		}
 		client.ListRooms(os.Args[1])
 		return
