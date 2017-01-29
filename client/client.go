@@ -70,20 +70,6 @@ func CheckForHit(j int, thing slack.CtxMessage, channel string) {
 	}
 }
 
-func Stats(team string) {
-	teams := strings.Split(os.Getenv("SLACK_TEAMS"), ",")
-	tokens := strings.Split(os.Getenv("SLACK_TOKENS"), ",")
-	for i, t := range teams {
-		if t != team {
-			continue
-		}
-		fmt.Println(team)
-		api := slack.New(tokens[i])
-		fmt.Println(api)
-
-	}
-}
-
 func Search() {
 	teams := strings.Split(os.Getenv("SLACK_TEAMS"), ",")
 	tokens := strings.Split(os.Getenv("SLACK_TOKENS"), ",")
