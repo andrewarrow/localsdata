@@ -28,13 +28,18 @@ func Stats(team string) {
 				fmt.Println("syncing ", j)
 				j += 1000
 				hp := slack.HistoryParameters{Oldest: tss, Latest: "", Count: 1000, Inclusive: false, Unreads: false}
-				list, _ := api.GetGroupHistory(r, hp)
+				list, _ := api.GetIMHistory(r.ID, hp)
+
+				if list == nil {
+					break
+				}
+
 				stamps := make([]string, 0)
-				for _, r := range list.Messages {
+				for _, rr := range list.Messages {
 					//fmt.Println(r.Msg.Timestamp)
 					//fmt.Println(r.Msg.Text)
 					//fmt.Println(r.Msg.Attachments)
-					stamps = append(stamps, r.Msg.Timestamp)
+					stamps = append(stamps, rr.Msg.Timestamp)
 					count += 1
 				}
 				if len(stamps) == 0 {
