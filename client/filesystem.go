@@ -9,6 +9,8 @@ import "github.com/nlopes/slack"
 import "strings"
 import "io/ioutil"
 import "github.com/mvdan/xurls"
+import "time"
+import "strconv"
 
 func UserHomeDir() string {
 	if runtime.GOOS == "windows" {
@@ -73,7 +75,14 @@ func LookForLinks(text string) {
 func SaveMsg(team, room string, msg slack.Msg) {
 	dir := SetupDirs(team, room)
 
-	lpath := filepath.Join(dir, "msg", msg.Timestamp)
+        ts, _ := strconv.ParseFloat(msg.Timestamp, 64)
+        t := time.Unix(int64(ts), 0)
+        dstr := t.Format("2006-01-02")
+
+	base := filepath.Join(dir, "msg", dstr)
+	os.Mkdir(base, 0700)
+
+	lpath := filepath.Join(dir, "msg", dstr, msg.Timestamp)
 	//fmt.Println(lpath)
 	file, _ := os.OpenFile(lpath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
 	file.WriteString(msg.Text)
