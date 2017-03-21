@@ -9,29 +9,6 @@ import "github.com/mvdan/xurls"
 
 var links = make(map[string]int)
 
-func SaveHistory2(team, room string) {
-	//ts := time.Now().Unix() - int64(31536000*5)
-	//tss := fmt.Sprintf("%d", ts)
-
-	teams := strings.Split(os.Getenv("SLACK_TEAMS"), ",")
-	tokens := strings.Split(os.Getenv("SLACK_TOKENS"), ",")
-	for i, t := range teams {
-		if t != team {
-			continue
-		}
-		api := slack.New(tokens[i])
-
-		gfp := slack.GetFilesParameters{Channel: room, Count: 100}
-		list, p, err := api.GetFiles(gfp)
-		for _, r := range list {
-			//SaveFile(team, room, r.URLPrivate, tokens[i], int64(r.Timestamp))
-
-			fmt.Println(r.Name, int64(r.Timestamp), r.URLPrivateDownload)
-		}
-		fmt.Println(p, err)
-	}
-}
-
 func Clean() {
 	teams := strings.Split(os.Getenv("SLACK_TEAMS"), ",")
 	for _, t := range teams {
@@ -133,6 +110,14 @@ func SaveHistory(team, room string) {
 			tss = stamps[0]
 			//fmt.Println("-----")
 			//time.Sleep(time.Second)
+		}
+
+		gfp := slack.GetFilesParameters{Channel: room, Count: 100}
+		list, _, _ := api.GetFiles(gfp)
+		for _, r := range list {
+			SaveFile(team, room, r.URLPrivate, tokens[i], int64(r.Timestamp))
+
+			//fmt.Println(r.Name, int64(r.Timestamp), r.URLPrivateDownload)
 		}
 	}
 

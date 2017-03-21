@@ -33,7 +33,13 @@ func SaveFile(team, room, url, token string, ts int64) {
 
 	parts := strings.Split(url, ".")
 
-	lpath := filepath.Join(dir, "files", fmt.Sprintf("%d.%s", ts, parts[len(parts)-1]))
+        t := time.Unix(int64(ts), 0)
+        dstr := t.Format("2006-01-02")
+
+	base := filepath.Join(dir, "files", dstr)
+	os.Mkdir(base, 0700)
+
+	lpath := filepath.Join(dir, "files", dstr, fmt.Sprintf("%d.%s", ts, parts[len(parts)-1]))
 	//fmt.Println(lpath)
 	file, _ := os.OpenFile(lpath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
 	file.Write(data)
