@@ -2,6 +2,7 @@ package main
 
 import "github.com/andrewarrow/localsdata/client"
 import "os"
+import "fmt"
 
 func main() {
 	if len(os.Args) == 1 {
@@ -14,6 +15,9 @@ func main() {
 			return
 		} else if os.Args[1] == "search" {
 			client.Search()
+			return
+		} else if os.Args[1] == "-v" {
+			fmt.Println("0.8.3")
 			return
 		} else if os.Args[1] == "stats" {
 			client.Stats("hdt")
