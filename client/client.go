@@ -86,8 +86,13 @@ func Say(team, room, what string) {
 			continue
 		}
 		api := slack.New(tokens[i])
-		//_ := api.Say(room, hp)
-    fmt.Println(api)
+    params := slack.PostMessageParameters{}
+    channelID, timestamp, err := api.PostMessage(room, what, params)
+    if err != nil {
+      fmt.Printf("%s\n", err)
+      return
+    }
+    fmt.Printf("Message successfully sent to channel %s at %s", channelID, timestamp)
   }
 }
 
