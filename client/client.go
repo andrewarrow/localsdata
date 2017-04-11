@@ -78,6 +78,19 @@ func Search() {
 	}
 }
 
+func Say(team, room, what string) {
+	teams := strings.Split(os.Getenv("SLACK_TEAMS"), ",")
+	tokens := strings.Split(os.Getenv("SLACK_TOKENS"), ",")
+	for i, t := range teams {
+		if t != team {
+			continue
+		}
+		api := slack.New(tokens[i])
+		//_ := api.Say(room, hp)
+    fmt.Println(api)
+  }
+}
+
 func SaveHistory(team, room string) {
 	ts := time.Now().Unix() - int64(31536000*5)
 	tss := fmt.Sprintf("%d", ts)

@@ -30,4 +30,8 @@ func main() {
 		client.SaveHistory(os.Args[1], os.Args[2])
 		return
 	}
+	if len(os.Args) == 4 {
+		client.Say(os.Args[1], os.Args[2], os.Args[3])
+		return
+	}
 }
